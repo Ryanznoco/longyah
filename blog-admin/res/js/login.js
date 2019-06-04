@@ -1,4 +1,6 @@
-if(window.top!==window.self){window.top.location=window.location};
+if (window.top !== window.self) {
+    window.top.location = window.location
+}
 layui.use(['element'], function () {
     var $ = layui.jquery;
     $(document).on('click', '.captcha-img', function () {
@@ -11,7 +13,7 @@ layui.use(['element'], function () {
         var url = form.attr("action");
         var serializeArray = form.serializeArray();
         $.post(url, serializeArray, function (result) {
-            if(result.code != 200){
+            if (result.code != 200) {
                 $('.captcha-img').click();
             }
             $.fn.Messager(result);
