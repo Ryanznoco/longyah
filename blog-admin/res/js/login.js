@@ -13,7 +13,7 @@ layui.use(['element'], function () {
         var url = form.attr("action");
         var serializeArray = form.serializeArray();
         $.post(url, serializeArray, function (result) {
-            if (result.code != 200) {
+            if (!result.success) {
                 $('.captcha-img').click();
             }
             $.fn.Messager(result);
