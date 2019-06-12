@@ -1,11 +1,13 @@
 package com.longyah.blog.api;
 
+import com.longyah.blog.consts.SessionKeyConsts;
 import com.longyah.blog.dto.ResultDto;
 import com.longyah.blog.entity.User;
 import com.longyah.blog.form.LoginForm;
 import com.longyah.blog.service.UserService;
 import com.longyah.blog.utils.CaptchaUtil;
 import com.longyah.blog.vo.ResultVo;
+import com.longyah.blog.vo.TokenVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static com.longyah.blog.consts.ResponseCodeConsts.*;
@@ -21,9 +24,8 @@ import static com.longyah.blog.consts.ResponseCodeConsts.*;
  * @author RenQiang
  * @date 2019/6/4
  */
-@Validated
 @RestController
-@RequestMapping(value = "/api/auth")
+@RequestMapping(value = "/auth")
 public class AuthorizationApi {
     private static final String CAPTCHA_SESSION_KEY = "captcha";
 
@@ -31,12 +33,13 @@ public class AuthorizationApi {
     private UserService userService;
 
     @PostMapping("/login")
-    public ResultVo<Void> login(@Validated @RequestBody LoginForm loginForm) {
+    public ResultVo<TokenVo> login(@Validated @RequestBody LoginForm loginForm, HttpSession session) {
         ResultDto<User> loginResult = userService.login(loginForm.getUsername(), loginForm.getPassword());
         if (!loginResult.isSuccess()) {
             return new ResultVo<>(LOGIN_FAIL.getCode(), "登录失败，用户名或密码错误");
         }
-        return new ResultVo<>();
+        session.setAttribute(SessionKeyConsts.USER_ID_SESSION_KEY, loginResult.getData().getId());
+        return new ResultVo<>(TokenVo.builder().token(session.getId()).build());
     }
 
     @GetMapping("/captcha")

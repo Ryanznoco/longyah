@@ -11,7 +11,7 @@ import lombok.ToString;
 @ToString
 public class ResultDto<T> {
     private boolean success;
-    private String msg;
+    private String message;
     private T data;
 
     public ResultDto() {
@@ -23,8 +23,8 @@ public class ResultDto<T> {
         this.data = data;
     }
 
-    public ResultDto(String msg) {
+    public ResultDto(String message) {
         this.success = false;
-        this.msg = msg;
+        this.message = message;
     }
 }

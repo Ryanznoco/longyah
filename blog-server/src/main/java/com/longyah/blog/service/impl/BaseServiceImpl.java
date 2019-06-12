@@ -12,7 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
  * @date 2019/6/5
  */
 @Transactional(readOnly = true, rollbackFor = Exception.class)
-public class BaseServiceImpl<E extends IdEntity, R extends BaseRepository> implements BaseService<E> {
+public class BaseServiceImpl<E extends IdEntity, R extends BaseRepository<E>> implements BaseService<E> {
     @Autowired
     protected R repository;
+
+    @Override
+    public E getById(Long id) {
+        return repository.getOne(id);
+    }
 }
