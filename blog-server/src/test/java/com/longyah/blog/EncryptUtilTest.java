@@ -2,6 +2,7 @@ package com.longyah.blog;
 
 import com.longyah.blog.utils.EncryptUtil;
 import org.junit.Test;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static org.junit.Assert.*;
 
@@ -10,6 +11,13 @@ import static org.junit.Assert.*;
  * @date 2019/6/5
  */
 public class EncryptUtilTest {
+
+    @Test
+    public void testBCryptPasswordEncoder() {
+        String encrypted = new BCryptPasswordEncoder().encode("810625938");
+        System.out.println(encrypted);
+        System.out.println(encrypted.length());
+    }
 
     @Test
     public void testEncryptPassword() {

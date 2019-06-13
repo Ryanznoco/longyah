@@ -40,6 +40,18 @@ public class EncryptUtil {
     }
 
     /**
+     * 从密文中获得盐并加密明文密码
+     *
+     * @param plain     明文密码
+     * @param encrypted 密文
+     * @return
+     */
+    public static String encryptPassword(String plain, String encrypted) {
+        String salt = encrypted.substring(32);
+        return DigestUtils.md5DigestAsHex((plain + salt).getBytes()) + salt;
+    }
+
+    /**
      * 校验密码
      *
      * @param password  明文密码

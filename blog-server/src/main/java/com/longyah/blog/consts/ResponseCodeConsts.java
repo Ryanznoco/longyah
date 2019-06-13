@@ -23,6 +23,14 @@ public enum ResponseCodeConsts {
      */
     CAPTCHA_ERROR(40019, "Captcha error"),
     /**
+     * 用户名不存在
+     */
+    USERNAME_NOT_FOUND(40101, "Username not found"),
+    /**
+     * 没有权限/权限不够
+     */
+    NO_ACCESS(20020, "No access"),
+    /**
      * Token 无效
      */
     ILLEGAL_TOKEN(50008, "Illegal token"),
